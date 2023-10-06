@@ -1,3 +1,1 @@
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector("#spanId").textContent = "123";
-});
+document.querySelector("#spanId").textContent = "123";
