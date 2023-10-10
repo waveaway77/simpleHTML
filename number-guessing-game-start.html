@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Number guessing game</title>
+
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+
+      body {
+        width: 50%;
+        max-width: 800px;
+        min-width: 480px;
+        margin: 0 auto;
+      }
+      
+      .form input[type="number"] {
+        width: 200px;
+      }
+
+      .lastResult {
+        color: white;
+        padding: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Number guessing game</h1>
+
+    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+
+    <div class="form">
+      <label for="guessField">Enter a guess: </label>
+      <input type="number" min="1" max="100" required id="guessField" class="guessField">
+      <input type="submit" value="Submit guess" class="guessSubmit">
+    </div>
+
+    <div class="resultParas">
+      <p class="guesses"></p>
+      <p class="lastResult"></p>
+      <p class="lowOrHi"></p>
+    </div>
+
+    <script>
+      let randomNumber = Math.floor(Math.random() * 100) + 1;
+
+      const guesses = document.querySelector(".guesses"); // querySelector()는 참조를 가져오고자 하는 요소를 선택할 수 있는 CSS 선택자를 요구한다.
+      const lastResult = document.querySelector(".lastResult");
+      const lowOrHi = document.querySelector(".lowOrHi");
+
+      const guessSubmit = document.querySelector(".guessSubmit");
+      const guessField = document.querySelector(".guessField"); // HTML의 텍스트 입력 칸을 가리키는 참조를 저장한다.
+
+      let guessCount = 1;
+      let resetButton;
+      guessField.focus(); // 페이지 로딩이 끝나면 텍스트 커서가 자동으로 <input> (en-US)에 가도록 한다.
+
+      function checkGuess() {
+        const userGuess = Number(guessField.value); // 텍스트 필드에 입력된 현재 값을 저장한다
+        if (guessCount === 1) {
+          guesses.textContent = "Previous guesses: ";
+        }
+        guesses.textContent += userGuess + " ";
+
+        if (userGuess === randomNumber) {
+          lastResult.textContent = "Congratulations! You got it right!";
+          lastResult.style.backgroundColor = "green";
+          lowOrHi.textContent = "";
+          setGameOver();
+        } else if (guessCount === 10) {
+          lastResult.textContent = "!!!GAME OVER!!!";
+          lowOrHi.textContent = "";
+          setGameOver();
+        } else {
+          lastResult.textContent = "Wrong!";
+          lastResult.style.backgroundColor = "red";
+          if (userGuess < randomNumber) {
+            lowOrHi.textContent = "Last guess was too low!";
+          } else if (userGuess > randomNumber) {
+            lowOrHi.textContent = "Last guess was too high!";
+          }
+        }
+
+        guessCount++;
+        guessField.value = "";
+        guessField.focus();
+      }
+
+      guessSubmit.addEventListener("click", checkGuess);
+
+      function setGameOver() {
+        guessField.disabled = true;
+        guessSubmit.disabled = true;
+        resetButton = document.createElement("button");
+        resetButton.textContent = "Start new game";
+        document.body.append(resetButton);
+        resetButton.addEventListener("click", resetGame);
+      }
+
+      function resetGame() {
+        guessCount = 1;
+
+        /* 모든 정보 텍스트 문단의 내용을 지움 */
+        const resetParas = document.querySelectorAll(".resultParas p"); // <div class="resultParas"></div> 안의 모든 문단 요소를 선택
+        for (const resetPara of resetParas) { // 하나씩 순회
+          resetPara.textContent = ""; // 각각의 textContent를 ''(빈 문자열)로 설정
+          // resetParas는 상수지만, 상수의 내부 속성인 textContent는 바꿀 수 있다.
+        }
+
+        resetButton.parentNode.removeChild(resetButton); // HTML에서 초기화 버튼을 제거
+
+        guessField.disabled = false; // 양식 요소를 다시 활성화
+        guessSubmit.disabled = false; // 양식 요소를 다시 활성화
+        guessField.value = ""; // 입력 칸을 비운 후
+        guessField.focus(); // 포커스를 부여해서 새로운 숫자를 입력받을 준비
+
+        lastResult.style.backgroundColor = "white";
+
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+      }
+
+
+    </script>
+  </body>
+</html>
