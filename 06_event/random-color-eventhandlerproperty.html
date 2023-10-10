@@ -13,23 +13,41 @@
   <body>
     <button>Change color</button>
     <script>
-      const btn = document.querySelector('button');
-
-      function random(number) {
-        return Math.floor(Math.random()*number);
-      }
-
-      function bgChange() {
-        const rndCol = 'rgb(' + random(255) + ',' + random(255) + ',' + random(255) + ')';
-        document.body.style.backgroundColor = rndCol;
-      }
-
+      /* 방법 A: onclick */
+      // const btn = document.querySelector('button');
+      //
+      // function random(number) {
+      //   return Math.floor(Math.random()*number);
+      // }
+      //
+      // function bgChange() {
+      //   const rndCol = 'rgb(' + random(255) + ',' + random(255) + ',' + random(255) + ')';
+      //   document.body.style.backgroundColor = rndCol;
+      // }
+      //
       // btn.onclick = bgChange;
-      // btn.onfocus = bgChange;
-      // btn.onblur = bgChange;
-      // btn.ondblclick = bgChange;
-      // window.onkeydown = bgChange;
-      window.onmouseover = bgChange;
+      // // btn.onfocus = bgChange;
+      // // btn.onblur = bgChange;
+      // // btn.ondblclick = bgChange;
+      // // window.onkeydown = bgChange;
+      // // window.onmouseover = bgChange;
+
+      // /* 방법 B: 이벤트 리스너 등록 */
+      const btn = document.querySelector("button");
+      //
+      // // 기명 함수
+      // function bgChange() {
+      //   const rndCol = "rgb(" + random(255) + "," + random(255) + "," + random(255) + ")";
+      //   document.body.style.backgroundColor = rndCol;
+      // }
+      //
+      // btn.addEventListener("click", bgChange);
+      // // 익명 함수
+      btn.addEventListener("click", function () {
+        var rndCol = "rgb(" + random(255) + "," + random(255) + "," + random(255) + ")";
+        document.body.style.backgroundColor = rndCol;
+      });
+
     </script>
   </body>
 </html>
