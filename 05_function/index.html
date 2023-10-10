@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Function start</title>
+  <style>
+    .msgBox {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 242px;
+      background: #eee;
+    }
+
+    .msgBox p {
+      line-height: 1.5;
+      padding: 10px 20px;
+      color: #333;
+      padding-left: 82px;
+      background-position: 25px center;
+      background-repeat: no-repeat;
+    }
+
+    .msgBox button {
+      background: none;
+      border: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 1.1rem;
+      color: #aaa;
+    }
+
+  </style>
+</head>
+<body>
+<button>Display message box</button>
+<script>
+  const btn = document.querySelector("button");
+  /* 함수 호출 연산자(function invocation operator) */
+  // btn.onclick = displayMessage(); // ()가 붙을 경우 현재 스코프에서 즉시 실행하게 된다.
+  // btn.onclick = displayMessage; // 버튼이 클릭된 이후에만 호출된다.
+  btn.onclick = function () { // 함수를 익명 함수 안에 넣어 함수가 즉각적인 스코프(immediate scope) 내에 있지 않게 하여 즉시 호출되지 않게했다.
+    // displayMessage("Your inbox is almost full — delete some mails", "warning");
+    displayMessage("Brian: Hi there, how are you today?", "chat");
+  };
+
+  function displayMessage(msgText, msgType) {
+    const html = document.querySelector("html"); // DOM API 함수
+
+    const panel = document.createElement("div"); // DOM API 함수
+    panel.setAttribute("class", "msgBox");
+    html.appendChild(panel); // DOM 함수를 호출하여 panel을 추가
+
+    const msg = document.createElement("p");
+    msg.textContent = msgText;
+    panel.appendChild(msg);
+
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "x";
+    panel.appendChild(closeBtn);
+
+    closeBtn.onclick = function () {
+      panel.parentNode.removeChild(panel);
+    };
+
+    if (msgType === "warning") {
+      msg.style.backgroundImage = "url(icons/warning.png)";
+      panel.style.backgroundColor = "red";
+    } else if (msgType === "chat") {
+      msg.style.backgroundImage = "url(icons/chat.png)";
+      panel.style.backgroundColor = "aqua";
+    } else {
+      msg.style.paddingLeft = "20px";
+    }
+  }
+</script>
+</body>
+</html>
