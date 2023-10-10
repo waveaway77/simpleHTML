@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h2>Live output</h2>
+  <div class="output" style="min-height: 125px;">
+    <ul></ul>
+  </div>
+</body>
+<script>
+  const list = document.querySelector('.output ul');
+  list.innerHTML = '';
+  const stations = ['MAN675847583748sjt567654;Manchester Piccadilly',
+    'GNF576746573fhdg4737dh4;Greenfield',
+    'LIV5hg65hd737456236dch46dg4;Liverpool Lime Street',
+    'SYB4f65hf75f736463;Stalybridge',
+    'HUD5767ghtyfyr4536dh45dg45dg3;Huddersfield'];
+
+  for (let station of stations) {
+
+    const stationCode = station.slice(0, 3);
+    const stationName = station.slice(station.indexOf(';') + 1);
+    const result = `${stationCode}: ${stationName}`;
+
+    const listItem = document.createElement('li');
+    listItem.textContent = result;
+    list.appendChild(listItem);
+  }
+</script>
+<style>
+  html {
+    font-family: sans-serif;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  .a11y-label {
+    margin: 0;
+    text-align: right;
+    font-size: 0.7rem;
+    width: 98%;
+  }
+
+  body {
+    margin: 10px;
+    background: #f5f9fa;
+  }
+</style>
+</html>
