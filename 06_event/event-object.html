@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button>Change color</button>
+</body>
+<script>
+    const btn = document.querySelector("button");
+    function random(number) {
+        return Math.floor(Math.random() * (number + 1));
+    }
+    function bgChange(e) { // 이벤트 객체 e를 통해 'click' 이벤트의 정보에 접근할 수 있다.
+        console.log(e);
+        const rndCol = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
+        e.target.style.backgroundColor = rndCol; // e.target은 이벤트가 발생한 요소, 즉 버튼을 가르킨다.
+        console.log(e);
+    }
+    btn.addEventListener("click", bgChange);
+</script>
+</html>
