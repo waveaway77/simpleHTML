@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Abort Controller Demo</title>
+</head>
+<body>
+<script>
+  const controller = new AbortController();
+
+  setTimeout(() => {
+    controller.abort();
+  }, 2_000);
+
+  const URL = 'https://httpbin.org/delay/5';
+  fetch(URL, { signal: controller.signal })
+          .then((res) => {
+            console.log(`Received: ${res.status}`);
+          }).catch((err) => {
+    if (err.name === 'AbortError') {
+      console.error('Aborted: ', err);
+      return;
+    }
+    throw err;
+  });
+</script>
+</body>
+</html>
