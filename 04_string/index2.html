@@ -1,0 +1,53 @@
+<html>
+<head>
+</head>
+<body>
+    <h2>Live output</h2>
+    <div class="output" style="min-height: 125px;">
+        <ul></ul>
+    </div>
+</body>
+<script>
+    const list = document.querySelector('.output ul');
+    list.innerHTML = '';
+    const cities = ['lonDon', 'ManCHESTer', 'BiRmiNGHAM', 'liVERpoOL'];
+
+    for (let city of cities) {
+
+        // const firstLetter = city[0].toUpperCase();
+        // const restLetter = city.slice(1).toLowerCase();
+        // const result = firstLetter + restLetter;
+
+        const lower = city.toLowerCase();
+        const firstLetter = lower.slice(0,1);
+        const capitalized = lower.replace(firstLetter,firstLetter.toUpperCase());
+        const result = capitalized;
+
+        const listItem = document.createElement('li');
+        listItem.textContent = result;
+        list.appendChild(listItem);
+    }
+</script>
+<style>
+    html {
+        font-family: sans-serif;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .a11y-label {
+        margin: 0;
+        text-align: right;
+        font-size: 0.7rem;
+        width: 98%;
+    }
+
+    body {
+        margin: 10px;
+        background: #f5f9fa;
+    }
+
+</style>
+</html>
