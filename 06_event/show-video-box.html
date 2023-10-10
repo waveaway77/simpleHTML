@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Show video box example</title>
+    <style>
+      div {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 480px;
+        height: 380px;
+        border-radius: 10px;
+        background-color: #eee;
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.1));
+      }
+
+      .hidden {
+        left: -50%;
+      }
+
+      .showing {
+        left: 50%;
+      }
+
+      div video {
+        display: block;
+        width: 400px;
+        margin: 40px auto;
+      }
+
+    </style>
+  </head>
+  <body>
+    <button>Display video</button>
+
+    <div class="hidden">
+      <video>
+        <source src="rabbit320.mp4" type="video/mp4">
+        <source src="rabbit320.webm" type="video/webm">
+        <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.mp4">link to the video</a> instead.</p>
+      </video>
+    </div>
+
+    <script>
+
+      const btn = document.querySelector('button');
+      btn.onclick = function () { // 버튼을 누르면 비디오 창을 표시한다.
+        videoBox.setAttribute("class", "showing");
+      };
+
+      const videoBox = document.querySelector('div');
+      videoBox.onclick = function () { // 비디오 창을 누르면 비디오 창을 숨긴다.
+        videoBox.setAttribute("class", "hidden");
+      };
+      const video = document.querySelector('video');
+      // AS-IS
+      // video.onclick = function () { // 비디오를 누르면 비디오를 실행한다.
+      //   video.play();
+      // };
+      /*
+      여기까지의 코드로는 비디오를 클릭하면 비디오가 재생되지만, 동시에 비디오 창 안에 귀속된 비디오를 누르는 것이기 때문에 비디오 창이 숨겨진다.
+      즉 video.onclick을 하는 순간 videoBox.onclick도 함께 실행되는 것이다.
+      이처럼 부모 요소를 가지고 있는 요소에서 이벤트가 발생되었다면 브라우저는 두개의 단계를 거치게 된다. 1.캡처링, 2.버블링.
+      */
+
+      // TO-BE
+      video.onclick = function (e) {
+        e.stopPropagation(); // 버블링 방지
+        video.play();
+      };
+      /*
+      이렇게하면 비디오를 클릭해도 비디오 창이 사라지지 않는다.
+      */
+
+
+    </script>
+  </body>
+</html>
