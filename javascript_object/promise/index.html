@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>My test page</title>
+</head>
+<body>
+<p>This is my page</p>
+</body>
+<script>
+  // happy case
+  // let promise = fetch("coffee.jpg"); // promise변수에 fetch() 작업으로 반환된 Promise 오브젝트를 저장
+  // bad case to see error handling
+  let promise = fetch("123.jpg");
+
+  // 1. promise2 = promise.then( 여기에 아래 코드가 들어감. 여기는 fulfilled 상태에만 실행됨. fulfilled 상태가 되면 Response가 반환될 것임. ); // 반환된 response 오브젝트를 매개변수로 전달한다.
+  // 2. (response) => response.blob(); // response를 blob 오브젝트로 변환하여 Response Body가 완전히 다운로드 됐는지 확인
+  let promise2 = promise.then((response) => response.blob()); // 1, 2를 한 문장으로 줄이면 이런 모양이 됨.
+
+  // blob() 메서드도 성공한다면 Promise를 반환할 것이다. 따라서 두 번째 Promise(promise2)의 .then() 메서드를 호출함으로써 "이행시 반환되는" Blob 오브젝트를 처리할 수 있다(아래 코드가 그 처리 과정이다). 한줄로 끝나지 않는다면 중괄호를 사용하자.
+  let promise3 = promise2.then((myBlob) => { // myBlob이 promise2의 결과로 반환된 Blob 오브젝트이다!
+    let objectURL = URL.createObjectURL(myBlob); // 오브젝트가 가지고있는 URL이 반환된다.
+    let image = document.createElement("img"); // img 엘리먼트 생성
+    image.src = objectURL; // 엘리먼트의 src 속성에 저장
+    document.body.appendChild(image);
+  });
+
+  // 에러 핸들링
+  let errorCase = promise3.catch((e) => {
+    console.log( "There has been a problem with your fetch operation: " + e.message, );
+    // Failed to load resource: the server responded with a status of 404 (Not Found)
+    // 실제 사용례라면, 이미지 가져오기를 다시 실행하거나, 기본 이미지를 표시하는 등 작업을 지시할 수 있다.
+  })
+</script>
+</html>
