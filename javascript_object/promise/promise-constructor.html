@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  // let timeoutPromise = new Promise((resolve, reject) => { // resolve와 reject는 각각 fulfiled와 reject일 때 실행된다.
+  //   setTimeout(function () {
+  //     resolve("Success!");
+  //   }, 2000);
+  // });
+  //
+  // timeoutPromise.then((message) => {
+  //   alert(message);
+  // });
+
+  function timeoutPromise(message, interval) {
+    return new Promise((resolve, reject) => { //  함수를 실행하면 우리가 사용하고 싶은 Promise가 반환된다.
+      // 유효성 검사
+      if (message === "" || typeof message !== "string") {
+        reject("Message is empty or not a string");
+      }
+      if (interval < 0 || typeof interval !== "number") {
+        reject("Interval is negative or not a number");
+      }
+
+      setTimeout(function () {
+        resolve(message); // Promise를 resolve한다.
+      }, interval)
+    })
+  }
+
+  timeoutPromise("Hello", 1000)
+  .then((message) => {
+    alert(message);
+  })
+  .catch((e) => {
+    console.log("Error: " + e);
+  })
+</script>
+</html>

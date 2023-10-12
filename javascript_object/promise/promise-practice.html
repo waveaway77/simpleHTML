@@ -10,9 +10,9 @@
 </body>
 <script>
   // happy case
-  // let promise = fetch("coffee.jpg"); // promise변수에 fetch() 작업으로 반환된 Promise 오브젝트를 저장
+  let promise = fetch("coffee.jpg"); // promise변수에 fetch() 작업으로 반환된 Promise 오브젝트를 저장
   // bad case to see error handling
-  let promise = fetch("123.jpg");
+  // let promise = fetch("123.jpg");
 
   // 1. promise2 = promise.then( 여기에 아래 코드가 들어감. 여기는 fulfilled 상태에만 실행됨. fulfilled 상태가 되면 Response가 반환될 것임. ); // 반환된 response 오브젝트를 매개변수로 전달한다.
   // 2. (response) => response.blob(); // response를 blob 오브젝트로 변환하여 Response Body가 완전히 다운로드 됐는지 확인

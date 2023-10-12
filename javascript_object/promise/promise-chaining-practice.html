@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>My test page</title>
+</head>
+<body>
+<p>This is my page</p>
+</body>
+<script>
+  fetch("coffee.jpg") // fetch()의 이행 시 fulfilled라면 반환되는 Promise object를 response라는 매개변수로 전달
+   .then((response) => response.blob())
+   .then((myBlob) => { // .then()의 이행 시 fulfilled라면 반환되는 Blob object를 myBlob이라는 이름으로 사용
+     let objectURL = URL.createObjectURL(myBlob);
+     let image = document.createElement("img");
+     image.src = objectURL;
+     document.body.appendChild(image);
+   })
+  .catch((e) => {
+    console.log( "There has been a problem with your fetch operation: " + e.message, );
+  })
+</script>
+</html>
